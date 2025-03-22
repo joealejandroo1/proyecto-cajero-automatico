@@ -1,11 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cajero Automatico</title>
+    <title>Interfaz de Cajero Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #218838;
+        }
+        input[type="text"], input[type="password"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #cajero {
+            display: none; /* Ocultar la interfaz del cajero inicialmente */
+        }
+    </style>
 </head>
 <body>
-    
-</body>
-</html>
+
+<div class="container" id="login-container">
+    <h1>Iniciar Sesión</h1>
+    <form onsubmit="return login(event)">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" placeholder="Ingrese su usuario" required>
+        
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+        
+        <button type="submit" class="button">Iniciar Sesión</button>
+    </form>
+    <div id="login-message" style="text-align: center; margin-top: 20px;"></div>
+</div>
+
+<div class="container" id="cajero">
+    <h1>Cajero Automático</h1>
+    <form>
+        <label for="amount">Cantidad:</label>
+        <input type="number" id="amount" placeholder="Ingrese la cantidad" required>
+        
+        <button type="button" class="button" onclick="withdraw()">Retirar</button>
+        <button type="button" class="button" onclick="deposit()">Depositar</button>
+        <button type="button" class="button" onclick="checkBalance()">Consultar Saldo</button>
+    </form>
+    <div id="message" style="text-align: center; margin-top: 20px;"></div>
+</div>
+
+<script>
+    let balance = 1000; // Saldo inicial
+    const validUsername = "usuario"; // Usuario válido
+    const validPassword = "contraseña"; // Contraseña válida
+
+    function login(event) {
+        event.preventDefault(); // Evitar el envío del formulario
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === validUsername && password === validPassword) {
+            document.getElementById('login-container').style.display = 'none'; // Ocultar el formulario de inicio de sesión
+            document.getElementById('cajero').style.display = 'block'; // Mostrar la interfaz del cajero
+            document.getElementById('message').innerText = ''; // Limpiar mensajes
+        } else {
+            document.getElementById('login-message').innerText = 'Usuario o contraseña incorrectos.';
+        }
+    }
+
+    function withdraw() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        if (amount > balance) {
+            document.getElementById('message').innerText = 'Saldo insuficiente.';
+        } else {
+            balance -= amount;
+            document.getElementById('message').innerText = 'Retiro exitoso. Nuevo saldo: $' + balance;
+        }
+    }
+
+    function deposit() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        balance += amount;
+        document.getElementBy
