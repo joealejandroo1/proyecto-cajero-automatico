@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones Bancarias</title>
+    <!-- Vinculación del archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Operaciones Bancarias</h2>
+        <label for="monto">Monto:</label>
+        <input type="number" id="monto" placeholder="Ingrese el monto">
+        
+        <button onclick="ingresarDinero()">Ingresar Dinero</button>
+        <button onclick="retirarDinero()">Retirar Dinero</button>
+
+        <div class="saldo">Saldo actual: $<span id="saldo">0</span></div>
+    </div>
+
+    <script>
+        let saldo = 0;
+
+        function ingresarDinero() {
+            const monto = parseFloat(document.getElementById('monto').value);
+            if (monto > 0) {
+                saldo += monto;
+                actualizarSaldo();
+                alert(`Has ingresado $${monto.toFixed(2)}.`);
+            } else {
+                alert('Por favor, ingrese un monto válido.');
+            }
+        }
+
+        function retirarDinero() {
+            const monto = parseFloat(document.getElementById('monto').value);
+            if (monto > 0 && monto <= saldo) {
+                saldo -= monto;
+                actualizarSaldo();
+                alert(`Has retirado $${monto.toFixed(2)}.`);
+            } else if (monto > saldo) {
+                alert('Fondos insuficientes.');
+            } else {
+                alert('Por favor, ingrese un monto válido.');
+            }
+        }
+
+        function actualizarSaldo() {
+            document.getElementById('saldo').textContent = saldo.toFixed(2);
+        }
+    </script>
+</body>
+</html>
