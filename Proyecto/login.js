@@ -1,0 +1,32 @@
+const usuarios = [
+    {
+      usuario: "Ruben",
+      clave: "contraseña123"
+    },
+    {
+      usuario: "Daniela",
+      clave: "password2023"
+    },
+    {
+      usuario: "Joe",
+      clave: "guest"
+    }
+    {
+        usuario: "Carlos",
+        clave: "guest"
+      }
+  ];
+
+document.getElementById("boton").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const usuario = document.getElementById("usuario").value;
+    const clave = document.getElementById("clave").value;
+    const usuarioEncontrado = usuarios.find(usuarios => usuarios.usuario === usuario && usuarios.clave === clave;
+    
+    if (usuarioEncontrado) {
+      alert("Bienvenido " + usuarioEncontrado.usuario);
+    } else {
+      alert("Usuario no encontrado");
+    }
+
+
