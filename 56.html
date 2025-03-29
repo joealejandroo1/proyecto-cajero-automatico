@@ -79,44 +79,51 @@
 </div>
 
 <script>
-    let balance = 1000; // Saldo inicial
-
     const usuarios = [
-    {
-        usuario: "Ruben",
-        clave: "contraseña123"
-    },
-    {
-        usuario: "Daniela",
-        clave: "password2023"
-    },
-    {
-        usuario: "Joe",
-        clave: "guest"
-    },
-    {
-        usuario: "Carlos",
-        clave: "guest"
-    }
+        {
+            usuario: "Ruben",
+            clave: "contraseña123"
+        },
+        {
+            usuario: "Daniela",
+            clave: "password2023"
+        },
+        {
+            usuario: "Joe",
+            clave: "guest"
+        },
+        {
+            usuario: "Carlos",
+            clave: "guest"
+        }
     ];
 
     function MostrarCajero() {
         document.getElementById('login-container').style.display = 'none'; // Ocultar el formulario de inicio de sesión
         document.getElementById('cajero').style.display = 'block'; // Mostrar la interfaz del cajero
+        checkBalance(); // Mostrar el saldo al iniciar el cajero
     }
 
     document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const usuario = document.getElementById("username").value;
-    const clave = document.getElementById("password").value;
-    const usuarioEncontrado = usuarios.find((u) => u.usuario === usuario && u.clave === clave);
-    
-    if (usuarioEncontrado) {
-        alert("Bienvenido " + usuarioEncontrado.usuario);
-        MostrarCajero(); // Llamar a la función para mostrar el cajero
-    } else {
-        alert("Usuario no encontrado");
-    }
+        event.preventDefault();
+        const usuario = document.getElementById("username").value;
+        const clave = document.getElementById("password").value;
+        const usuarioEncontrado = usuarios.find((u) => u.usuario === usuario && u.clave === clave);
+        
+        if (usuarioEncontrado) {
+            alert("Bienvenido " + usuarioEncontrado.usuario);
+            // Cargar el saldo del localStorage o establecer un saldo inicial
+            const storedBalance = localStorage.getItem(usuario);
+            if (storedBalance) {
+                balance = parseFloat(storedBalance);
+            } else {
+                balance = 1000; // Saldo inicial si no hay saldo guardado
+                localStorage.setItem(usuario, balance); // Guardar el saldo inicial
+            }
+            MostrarCajero(); // Llamar a la función para mostrar el cajero
+        } else {
+            alert("Usuario no encontrado");
+        }
     });
 
     function withdraw() {
@@ -125,6 +132,7 @@
             document.getElementById('message').innerText = 'Saldo insuficiente.';
         } else {
             balance -= amount;
+            localStorage.setItem(document.getElementById("username").value, balance); // Actualizar el saldo en localStorage
             document.getElementById('message').innerText = 'Retiro exitoso. Nuevo saldo: $' + balance;
         }
     }
@@ -132,6 +140,7 @@
     function deposit() {
         const amount = parseFloat(document.getElementById('amount').value);
         balance += amount;
+        localStorage.setItem(document.getElementById("username").value, balance); // Actualizar el saldo en localStorage
         document.getElementById('message').innerText = 'Depósito exitoso. Nuevo saldo: $' + balance;
     }
 
@@ -140,4 +149,4 @@
     }
 </script>
 </body>
-
+</html>
