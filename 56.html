@@ -161,6 +161,19 @@
     function checkBalance() {
         document.getElementById('message').innerText = 'Su saldo actual es: $' + balance;
     }
+    function transferirSaldo() {
+            const monto = parseFloat(inputMonto.value);
+            if (validarMonto(monto)) {
+                if (monto <= saldo) {
+                    saldo -= monto;
+                    actualizarSaldo();
+                    mostrarMensaje(`Has transferido $${monto.toFixed(2)} a otra cuenta`);
+                    inputMonto.value = '';
+                } else {
+                    errorDiv.textContent = 'Fondos insuficientes';
+                }
+            }
+        }
 </script>
 </body>
 </html>
