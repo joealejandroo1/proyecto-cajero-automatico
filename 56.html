@@ -44,9 +44,9 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        #cajero {
+        /* #cajero {
             display: none; /* Ocultar la interfaz del cajero inicialmente */
-        }
+        } */
     </style>
 </head>
 <body>
@@ -73,6 +73,20 @@
         
         <button type="button" class="button" onclick="withdraw()">Retirar</button>
         <button type="button" class="button" onclick="deposit()">Depositar</button>
+
+        <button type="button" class="button" onclick="transferirSaldo()">Transferir Saldo</button>
+
+        <div class="usuarios-transferir">
+            <label for="transferir">Transferir a:</label>
+            <select id="transferir">
+                <option value="">Seleccione un usuario</option>
+                <option value="Ruben">Ruben</option>
+                <option value="Daniela">Daniela</option>
+                <option value="Joe">Joe</option>
+                <option value="Carlos">Carlos</option>
+            </select>
+        </div>
+
         <button type="button" class="button" onclick="checkBalance()">Consultar Saldo</button>
     </form>
     <div id="message" style="text-align: center; margin-top: 20px;"></div>
@@ -98,11 +112,11 @@
         }
     ];
 
-    function MostrarCajero() {
-        document.getElementById('login-container').style.display = 'none'; // Ocultar el formulario de inicio de sesión
-        document.getElementById('cajero').style.display = 'block'; // Mostrar la interfaz del cajero
-        checkBalance(); // Mostrar el saldo al iniciar el cajero
-    }
+    // function MostrarCajero() {
+    //     document.getElementById('login-container').style.display = 'none'; // Ocultar el formulario de inicio de sesión
+    //     document.getElementById('cajero').style.display = 'block'; // Mostrar la interfaz del cajero
+    //     checkBalance(); // Mostrar el saldo al iniciar el cajero
+    // }
 
     document.getElementById("login-form").addEventListener("submit", function(event) {
         event.preventDefault();
