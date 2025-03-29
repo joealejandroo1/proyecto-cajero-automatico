@@ -48,12 +48,12 @@
             display: none; /* Ocultar la interfaz del cajero inicialmente */
         }
     </style>
-</head>/
+</head>
 <body>
 
 <div class="container" id="login-container">
     <h1>Iniciar Sesión</h1>
-    <form onsubmit="return login(event)">
+    <form id="login-form" onsubmit="return login(event)">
         <label for="username">Usuario:</label>
         <input type="text" id="username" placeholder="Ingrese su usuario" required>
         
@@ -80,22 +80,44 @@
 
 <script>
     let balance = 1000; // Saldo inicial
-    const validUsername = "usuario"; // Usuario válido
-    const validPassword = "contraseña"; // Contraseña válida
 
-    function login(event) {
-        event.preventDefault(); // Evitar el envío del formulario
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        if (username === validUsername && password === validPassword) {
-            document.getElementById('login-container').style.display = 'none'; // Ocultar el formulario de inicio de sesión
-            document.getElementById('cajero').style.display = 'block'; // Mostrar la interfaz del cajero
-            document.getElementById('message').innerText = ''; // Limpiar mensajes
-        } else {
-            document.getElementById('login-message').innerText = 'Usuario o contraseña incorrectos.';
-        }
+    const usuarios = [
+    {
+        usuario: "Ruben",
+        clave: "contraseña123"
+    },
+    {
+        usuario: "Daniela",
+        clave: "password2023"
+    },
+    {
+        usuario: "Joe",
+        clave: "guest"
+    },
+    {
+        usuario: "Carlos",
+        clave: "guest"
     }
+    ];
+
+    function MostrarCajero() {
+        document.getElementById('login-container').style.display = 'none'; // Ocultar el formulario de inicio de sesión
+        document.getElementById('cajero').style.display = 'block'; // Mostrar la interfaz del cajero
+    }
+
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const usuario = document.getElementById("username").value;
+    const clave = document.getElementById("password").value;
+    const usuarioEncontrado = usuarios.find((u) => u.usuario === usuario && u.clave === clave);
+    
+    if (usuarioEncontrado) {
+        alert("Bienvenido " + usuarioEncontrado.usuario);
+        MostrarCajero(); // Llamar a la función para mostrar el cajero
+    } else {
+        alert("Usuario no encontrado");
+    }
+    });
 
     function withdraw() {
         const amount = parseFloat(document.getElementById('amount').value);
@@ -110,4 +132,12 @@
     function deposit() {
         const amount = parseFloat(document.getElementById('amount').value);
         balance += amount;
-        document.getElementBy
+        document.getElementById('message').innerText = 'Depósito exitoso. Nuevo saldo: $' + balance;
+    }
+
+    function checkBalance() {
+        document.getElementById('message').innerText = 'Su saldo actual es: $' + balance;
+    }
+</script>
+</body>
+
